@@ -1,0 +1,98 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+    color: #ffd700;
+}
+
+header {
+    background-color: #333;
+    color: #ffd700;
+    padding: 1em;
+    text-align: center;
+}
+
+#container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+#theater-container,
+#movie-container,
+#search-container {
+    width: 30%;
+    margin: 10px;
+    max-width: 300px;
+}
+
+#theater-container {
+    flex-shrink: 0;
+}
+
+
+.theater-list {
+    width: 80%;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid #eae4e4;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    border-radius: 10px; 
+    position: relative;
+}
+
+.theater-list:hover {
+    background-color: #ffd700;
+    color: #000;
+    border: 1px solid #000;
+}
+
+
+
+
+
+#movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
+}
+
+.movie-card {
+    width: 100%;
+    margin: 10px;
+    padding: 15px; 
+    border: 1px solid #fff; 
+    background-color: #000;
+    color: #ffd700;
+    position: relative;
+}
+
+
+
+.showtimes-container {
+    position: absolute;
+    bottom: 0;
+    width: 80%;
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+.showtime-select {
+    width: calc(100% - 10px); 
+    padding: 5px; 
+    margin-top: 5px;
+}
+
+
+
+
+
+
+

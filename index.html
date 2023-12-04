@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elokuvaohjelmisto</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <h1>Elokuvaohjelmisto</h1>
+    </header>
+
+    <div id="container">
+        <!-- Teatterit -->
+        <div id="theater-container">
+            <h2>Teatterit</h2>
+            <div id="theater-list" class="theater-list" onclick="fetchMovies('theaterName')">
+                Teatterit
+        
+
+            </div>
+        </div>
+
+        <!-- Elokuvalista -->
+        <div id="movie-container">
+            <h2>Teattereissa nyt</h2>
+            <div id="movie-list"></div>
+            <div id="showtimes"></div>
+            <div id="movieListContainer"></div>
+        </div>
+
+        <!-- Hakukenttä -->
+        <div id="search-container">
+            <h2>Haku</h2>
+            <input type="text" id="search-input" placeholder="Syötä hakulause...">
+            <button onclick="performCustomSearch()">Hae</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
