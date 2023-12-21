@@ -2,7 +2,8 @@ const theaterListContainer = document.getElementById('theater-list');
 const movieListContainer = document.getElementById('movie-list');
 const searchInput = document.getElementById('search-input');
 
-let selectedTheater = '';
+let selectedTheaterId = '';
+let lastFetchTime = 0;
 
 // Haetaan Finnkinon teatterit
 fetch('https://www.finnkino.fi/xml/TheatreAreas/')
@@ -10,26 +11,34 @@ fetch('https://www.finnkino.fi/xml/TheatreAreas/')
     .then(data => {
         const parser = new DOMParser();
         const xmlDoc = parser.parseFromString(data, 'text/xml');
-        const theaters = xmlDoc.getElementsByTagName('Name');
+        const theaters = xmlDoc.getElementsByTagName('TheatreArea');
 
         // Luodaan teatterilista
         for (let i = 0; i < theaters.length; i++) {
-            const theaterName = theaters[i].childNodes[0].nodeValue;
+            const theaterName = theaters[i].getElementsByTagName('Name')[0].childNodes[0].nodeValue;
+            const theaterId = theaters[i].getElementsByTagName('ID')[0].childNodes[0].nodeValue;
             const theaterItem = document.createElement('div');
             theaterItem.className = 'theater-list';
             theaterItem.innerText = theaterName;
-            theaterItem.addEventListener('click', () => fetchMovies(theaterName));
+            theaterItem.addEventListener('click', () => fetchMovies(theaterId));
             theaterListContainer.appendChild(theaterItem);
         }
-        
     });
 
 // Hakee elokuvat ja näytökset valitussa teatterissa
-function fetchMovies(theaterName) {
-    selectedTheater = theaterName;
+function fetchMovies(theaterId) {
+    const currentTime = new Date().getTime();
+    if (currentTime - lastFetchTime < 1000) {
+        // Älä tee mitään, jos edellinen haku tapahtui alle sekunti sitten
+        return;
+    }
+
+    lastFetchTime = currentTime;
+
+    selectedTheaterId = theaterId;
     const movieListContainer = document.getElementById('movieListContainer');
 
-    fetch(`https://www.finnkino.fi/xml/Schedule/?area=${theaterName}`)
+    fetch(`https://www.finnkino.fi/xml/Schedule/?area=${theaterId}`)
         .then(response => response.text())
         .then(data => {
             const parser = new DOMParser();
@@ -39,7 +48,6 @@ function fetchMovies(theaterName) {
             movieListContainer.innerHTML = '';
 
             let uniqueMovies = new Map();
-            
 
             for (let i = 0; i < movies.length; i++) {
                 const movieTitle = movies[i].getElementsByTagName('Title')[0].childNodes[0].nodeValue;
